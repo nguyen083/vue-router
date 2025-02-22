@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
     name: 'home',
     component: HomeView,
     meta: {
-      title: 'Home',
+      title: 'Shop | Home',
     },
   },
   {
@@ -22,7 +22,7 @@ const routes: RouteRecordRaw[] = [
     name: 'products',
     component: ListProductView,
     meta: {
-      title: 'List Product',
+      title: 'Shop | List Product',
     },
   },
   {
@@ -30,7 +30,7 @@ const routes: RouteRecordRaw[] = [
     name: 'product-detail',
     component: ProductView,
     meta: {
-      title: 'Product detail',
+      title: 'Shop | Product detail',
     },
   },
 ]
