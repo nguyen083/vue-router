@@ -1,46 +1,49 @@
 import type { RouteRecordRaw } from 'vue-router'
-import ListProductView from '@/views/ListProductView.vue'
-import ProductView from '@/views/ProductView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+const appName = import.meta.env.VITE_APP_NAME
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: { name: 'home' }, // chuyển hướng đến /home khi truy cập localhost:5173
+    redirect: { name: 'Home' },
   },
   {
     path: '/home',
-    name: 'home',
-    component: HomeView,
+    name: 'Home',
+    component: () => import('@/views/HomeView.vue'),
     meta: {
-      title: 'Shop | Home',
+      title: 'Home',
     },
   },
   {
     path: '/products',
-    name: 'products',
-    component: ListProductView,
-    meta: {
-      title: 'Shop | List Product',
-    },
-  },
-  {
-    path: '/products/:id',
-    name: 'product-detail',
-    component: ProductView,
-    meta: {
-      title: 'Shop | Product detail',
-    },
+    children: [
+      {
+        path: '',
+        name: 'Products',
+        component: () => import('@/views/ListProductView.vue'),
+        meta: {
+          title: 'List Product',
+        },
+      },
+      {
+        path: '/products/:id',
+        name: 'ProductDetail',
+        component: () => import('@/views/ProductView.vue'),
+        meta: {
+          title: 'Product detail',
+        },
+      },
+    ],
   },
 ]
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
-  // strict: true, đường dẫn được phân biệt nghiệm ngặt
 })
 router.beforeEach((to) => {
-  document.title = to.meta.title
+  document.title = `${appName} | ${to.meta.title}`
 })
 
 export default router

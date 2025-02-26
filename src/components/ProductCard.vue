@@ -17,7 +17,7 @@ function formatPrice(price: number) {
 }
 
 function handleGoToItem() {
-  router.push({ name: 'product-detail', params: { id: props.product.id } })
+  router.push({ name: 'ProductDetail', params: { id: props.product.id } })
 }
 </script>
 
