@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import ListProductView from '@/views/ListProductView.vue'
 import ProductView from '@/views/ProductView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
 
 const routes: RouteRecordRaw[] = [
   {

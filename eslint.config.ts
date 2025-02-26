@@ -1,30 +1,32 @@
-import pluginVue from 'eslint-plugin-vue'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import pluginVitest from '@vitest/eslint-plugin'
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import antfu from '@antfu/eslint-config'
 
-// To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
-// import { configureVueProject } from '@vue/eslint-config-typescript'
-// configureVueProject({ scriptLangs: ['ts', 'tsx'] })
-// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
-
-export default defineConfigWithVueTs(
+export default antfu(
   {
-    name: 'app/files-to-lint',
-    files: ['**/*.{ts,mts,tsx,vue}'],
+    vue: true,
+    typescript: true,
   },
-
   {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+    files: ['**/*.vue'],
+    rules: {
+      'vue/one-component-per-file': 0,
+      'vue/no-reserved-component-names': 0,
+      'vue/no-useless-v-bind': 0,
+    },
   },
-
-  pluginVue.configs['flat/essential'],
-  vueTsConfigs.recommended,
-  
   {
-    ...pluginVitest.configs.recommended,
-    files: ['src/**/__tests__/*'],
+    // Without `files`, they are general rules for all files
+    rules: {
+      'symbol-description': 0,
+      'no-console': 'warn',
+      'no-alert': 'warn',
+      'no-tabs': 'warn',
+      'ts/no-explicit-any': 'warn',
+      'vue/no-unused-refs': 'warn',
+      'unused-imports/no-unused-vars': 'warn',
+      'import/first': 0,
+      'node/prefer-global/process': 0,
+      'style/no-tabs': 0,
+      'unicorn/no-new-array': 0,
+    },
   },
-  skipFormatting,
 )
