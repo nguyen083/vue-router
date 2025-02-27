@@ -43,3 +43,8 @@ export interface Product {
   images: string[]
   thumbnail: string
 }
+export interface ProductInput {
+  title: string
+  description: string
+  price: number
+}

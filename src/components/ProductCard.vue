@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import type { Product } from '@/model/product'
+import SkeletonProductCard from '@/components/SkeletonProductCard.vue'
 import { Button } from '@/components/ui/button'
+import { useImage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
-//* **Define props of component
+
 interface Props {
   product: Product
 }
 
 const props = defineProps<Props>()
 const router = useRouter()
+const { isLoading } = useImage({ src: props.product.thumbnail })
 function formatPrice(price: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -22,16 +25,17 @@ function handleGoToItem() {
 </script>
 
 <template>
-  <div>
+  <SkeletonProductCard v-if="isLoading" />
+  <div v-else>
     <img
-      :src="props.product.thumbnail" :alt="props.product.title" width="{300}" height="{200}"
-      className="w-full h-48 object-cover"
+      :src="props.product.thumbnail" :alt="props.product.title"
+      class="w-full object-cover"
     >
-    <div className="p-4">
-      <h2 className="text-lg font-semibold mb-2">
+    <div class="p-4">
+      <h2 class="text-lg font-semibold mb-2">
         {{ props.product.title }}
       </h2>
-      <p className="text-gray-600">
+      <p class="text-gray-600">
         {{ formatPrice(props.product.price) }}
       </p>
       <Button

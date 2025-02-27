@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const instance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  timeout: 10000,
+  timeout: 3000,
 })
 
 instance.interceptors.response.use(

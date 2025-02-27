@@ -1,4 +1,4 @@
-import type { Product } from '@/model/product'
+import type { Product, ProductInput } from '@/model/product'
 import http from '@/api/axios'
 
 interface ProductPaging {
@@ -6,6 +6,13 @@ interface ProductPaging {
   limit: number
   skip: number
   total: number
+}
+
+interface ProductResponse {
+  id: number
+  title: string
+  description: string
+  price: number
 }
 
 const products = {
@@ -26,6 +33,9 @@ const products = {
 
     const urlParam = new URLSearchParams(pagingParams).toString()
     return http.get(`/products?${urlParam}`)
+  },
+  create(params: ProductInput): Promise<ProductResponse> {
+    return http.post('products/add', params)
   },
 }
 export default products
