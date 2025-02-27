@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input'
 import { useAddProductMutation } from '@/composables/use-product'
 import { toTypedSchema } from '@vee-validate/zod'
 import { Loader2, Plus } from 'lucide-vue-next'
+import { push } from 'notivue'
 import { useForm } from 'vee-validate'
 import { ref } from 'vue'
 import * as z from 'zod'
@@ -42,6 +43,7 @@ const onSubmit = handleSubmit((values: ProductInput) => {
     onSuccess: () => {
       resetForm()
       isOpen.value = false
+      push.success({ message: 'Thêm mới sản phẩm thành công', title: 'Thành công' })
     },
     onError: (error) => {
       console.error(error)
