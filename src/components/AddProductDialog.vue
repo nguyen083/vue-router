@@ -21,7 +21,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useAddProductMutation } from '@/composables/use-product'
 import { toTypedSchema } from '@vee-validate/zod'
-import { Loader2, MailOpen } from 'lucide-vue-next'
+import { Loader2, Plus } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import { ref } from 'vue'
 import * as z from 'zod'
@@ -54,7 +54,7 @@ const onSubmit = handleSubmit((values: ProductInput) => {
   <Dialog v-model:open="isOpen">
     <DialogTrigger as-child>
       <Button variant="outline" class="border-gray-500" @click=" isOpen = true ">
-        <MailOpen class="w-4 h-4 mr-2" /> Thêm sản phẩm
+        <Plus class="w-4 h-4 mr-2" /> Thêm sản phẩm
       </Button>
     </DialogTrigger>
     <DialogContent>
