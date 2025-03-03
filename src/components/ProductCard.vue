@@ -3,6 +3,7 @@ import type { Product } from '@/model/product'
 import SkeletonProductCard from '@/components/SkeletonProductCard.vue'
 import { Button } from '@/components/ui/button'
 import { useImage } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const router = useRouter()
+const { t } = useI18n()
 const { isLoading } = useImage({ src: props.product.thumbnail })
 function formatPrice(price: number) {
   return new Intl.NumberFormat('en-US', {
@@ -42,7 +44,7 @@ function handleGoToItem() {
         class-name="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
         @click="handleGoToItem"
       >
-        Go to Item
+        {{ t('Go_to_item') }}
       </Button>
     </div>
   </div>

@@ -25,9 +25,11 @@ import { Loader2, Plus } from 'lucide-vue-next'
 import { push } from 'notivue'
 import { useForm } from 'vee-validate'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import * as z from 'zod'
 
 const isOpen = ref<boolean>(false)
+const { t } = useI18n()
 const productMutation = useAddProductMutation()
 const formSchema = toTypedSchema(z.object({
   title: z.string().min(2).max(50),
@@ -56,38 +58,38 @@ const onSubmit = handleSubmit((values: ProductInput) => {
   <Dialog v-model:open="isOpen">
     <DialogTrigger as-child>
       <Button variant="outline" class="border-gray-500" @click=" isOpen = true ">
-        <Plus class="w-4 h-4 mr-2" /> Thêm sản phẩm
+        <Plus class="w-4 h-4 mr-2" /> {{ t('Add_product') }}
       </Button>
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Thêm sản phẩm</DialogTitle>
+        <DialogTitle>{{ t('Add_product') }}</DialogTitle>
         <DialogDescription>
-          Thêm sản phẩm mới
+          {{ t('Add_new_product') }}
         </DialogDescription>
       </DialogHeader>
       <form :validation-schema="formSchema" @submit="onSubmit">
         <FormField v-slot="{ componentField }" name="title">
           <FormItem>
-            <FormLabel>Tiêu đề</FormLabel>
+            <FormLabel>{{ t('Title') }}</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="Tiêu đề sản phẩm" v-bind="componentField" />
+              <Input type="text" :placeholder="t('Title_of_product')" v-bind="componentField" />
             </FormControl>
             <FormMessage />
           </FormItem>
         </FormField>
         <FormField v-slot="{ componentField }" name="description">
           <FormItem>
-            <FormLabel>Mô tả</FormLabel>
+            <FormLabel>{{ t('Description') }}</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="Mô tả sản phẩm" v-bind="componentField" />
+              <Input type="text" :placeholder="t('Description_of_product')" v-bind="componentField" />
             </FormControl>
             <FormMessage />
           </FormItem>
         </FormField>
         <FormField v-slot="{ componentField }" name="price">
           <FormItem>
-            <FormLabel>Giá tiền</FormLabel>
+            <FormLabel>{{ t('Price') }}</FormLabel>
             <FormControl>
               <Input type="number" placeholder="0.00" v-bind="componentField" />
             </FormControl>
@@ -99,7 +101,7 @@ const onSubmit = handleSubmit((values: ProductInput) => {
             <Button
               type="button" variant="outline" class="border-gray-500"
             >
-              Đóng
+              {{ t('Close') }}
             </Button>
           </DialogClose>
           <Button
@@ -107,7 +109,7 @@ const onSubmit = handleSubmit((values: ProductInput) => {
             type="submit" variant="default"
           >
             <Loader2 v-if="productMutation.isPending.value" class="w-4 h-4 mr-2 animate-spin" />
-            Thêm
+            {{ t('Add') }}
           </Button>
         </DialogFooter>
       </form>

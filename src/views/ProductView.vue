@@ -3,6 +3,7 @@ import products from '@/api/product-api'
 import SkeletonProductDetail from '@/components/SkeletonProductDetail.vue'
 import { Button } from '@/components/ui/button'
 import { useQuery } from '@tanstack/vue-query'
+import { useImage } from '@vueuse/core'
 import { useRouteParams } from '@vueuse/router'
 import { computed } from 'vue'
 
@@ -11,7 +12,6 @@ const { status, data, error } = useQuery({
   queryKey: ['product', id],
   queryFn: async () => await products.getById(id.value),
 })
-
 const price = computed(() => formatPrice(data.value?.price || 0))
 function formatPrice(price: number) {
   return new Intl.NumberFormat('en-US', {

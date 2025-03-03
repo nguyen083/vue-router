@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TranslateDropdown from '@/components/TranslateDropdown.vue'
 import {
   Sidebar,
   SidebarContent,
@@ -11,9 +12,13 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { Switch } from '@/components/ui/switch'
+import { Icon } from '@iconify/vue'
 import { useColorMode } from '@vueuse/core'
 import { Home, Menu } from 'lucide-vue-next'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n({ useScope: 'global' })
 import { RouterLink, useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -22,12 +27,12 @@ const mode = useColorMode()
 // Menu items.
 const items = [
   {
-    title: 'Trang chủ',
+    title: 'Home',
     url: '/home',
     icon: Home,
   },
   {
-    title: 'Danh sách sản phẩm',
+    title: 'List_product',
     url: '/products',
     icon: Menu,
   },
@@ -43,8 +48,9 @@ function changeTheme() {
   <Sidebar>
     <SidebarContent>
       <SidebarGroup>
-        <SidebarGroupLabel class="text-xl ">
+        <SidebarGroupLabel class="text-xl flex justify-between items-center">
           Shop Shoe
+          <TranslateDropdown />
         </SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu class="flex flex-col gap-4">
@@ -52,8 +58,8 @@ function changeTheme() {
               <SidebarMenuButton as-child>
                 <RouterLink :to="item.url" :class="route.path === item.url ? '!text-green-500' : ''">
                   <component :is="item.icon" />
-                  <span class="text-lg">{{ item.title
-                  }}</span>
+                  <span class="text-lg">
+                    {{ t(`${item.title}`) }}</span>
                 </RouterLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -61,7 +67,7 @@ function changeTheme() {
         </SidebarGroupContent>
       </SidebarGroup>
     </SidebarContent>
-    <SidebarFooter class="flex justify-center items-center gap-2">
+    <SidebarFooter class="flex justify-center items-center ">
       <Switch :model-value="isDark" @update:model-value="changeTheme">
         <template #thumb>
           <Icon v-if="isDark" icon="lucide:moon" class="size-3" />
