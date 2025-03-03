@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -8,10 +11,10 @@ import { RouterLink } from 'vue-router'
       <section class="bg-gray-100 py-20">
         <div class="container mx-auto px-4 text-center">
           <h2 class="text-4xl font-bold text-gray-800 mb-4">
-            Welcome to My Website
+            {{ t('Welcome') }}
           </h2>
           <p class="text-xl text-gray-600 mb-8">
-            Discover amazing content and services.
+            {{ t('Discover') }}
           </p>
           <RouterLink to="" class-name="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
             Get Started
@@ -22,23 +25,23 @@ import { RouterLink } from 'vue-router'
       <section class="py-20">
         <div class="container mx-auto px-4">
           <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">
-            Our Features
+            {{ t('Our_features') }}
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="bg-white p-6 rounded shadow">
               <h4 class="text-xl font-semibold text-gray-800 mb-2">
-                Feature 1
+                {{ t('Feature', ['1']) }}
               </h4>
               <p class="text-gray-600">
-                Description of feature 1 goes here.
+                {{ t('Description_feature', { msg: '1' }) }}
               </p>
             </div>
             <div class="bg-white p-6 rounded shadow">
               <h4 class="text-xl font-semibold text-gray-800 mb-2">
-                Feature 2
+                {{ t('Feature', ['2']) }}
               </h4>
               <p class="text-gray-600">
-                Description of feature 2 goes here.
+                {{ t('Description_feature', { msg: '2' }) }}
               </p>
             </div>
             <div class="bg-white p-6 rounded shadow">
@@ -46,7 +49,7 @@ import { RouterLink } from 'vue-router'
                 Feature 3
               </h4>
               <p class="text-gray-600">
-                Description of feature 3 goes here.
+                {{ t('Description_feature', { msg: '3' }) }}
               </p>
             </div>
           </div>

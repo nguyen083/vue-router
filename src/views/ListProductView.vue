@@ -27,7 +27,9 @@ import {
 import { useProduct } from '@/composables/use-product'
 import { useRouteQuery } from '@vueuse/router'
 import { nextTick, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const limit = useRouteQuery('limit', '12', { transform: Number })
 const page = useRouteQuery('page', '1', { transform: Number })
 const q = useRouteQuery<string>('q', '')
@@ -54,7 +56,7 @@ watch(q, () => {
 <template>
   <div class="container mx-auto px-4 py-8 flex flex-col gap-6 h-screen !w-full">
     <h1 class="text-3xl font-bold mb-6 text-center">
-      Danh sách sản phẩm
+      {{ t('List_product') }}
     </h1>
     <div class="pb-2 flex justify-between">
       <SearchInput />
