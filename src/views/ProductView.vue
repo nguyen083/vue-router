@@ -3,15 +3,19 @@ import products from '@/api/product-api'
 import SkeletonProductDetail from '@/components/SkeletonProductDetail.vue'
 import { Button } from '@/components/ui/button'
 import { useQuery } from '@tanstack/vue-query'
-import { useImage } from '@vueuse/core'
 import { useRouteParams } from '@vueuse/router'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const id = useRouteParams('id', '0')
+const { t } = useI18n()
 const { status, data, error } = useQuery({
   queryKey: ['product', id],
-  queryFn: async () => await products.getById(id.value),
+  queryFn: async () => {
+    return products.getById(id.value)
+  },
 })
+
 const price = computed(() => formatPrice(data.value?.price || 0))
 function formatPrice(price: number) {
   return new Intl.NumberFormat('en-US', {
@@ -22,7 +26,7 @@ function formatPrice(price: number) {
 </script>
 
 <template>
-  <SkeletonProductDetail v-if="status === 'pending'" />
+  <SkeletonProductDetail v-if="status === 'pending' " />
   <div v-else class="container mx-auto px-4 py-8">
     <div v-if="status === 'success'" class="flex flex-col md:flex-row">
       <div class="md:w-1/2 mb-8 md:mb-0">
@@ -39,7 +43,7 @@ function formatPrice(price: number) {
           Product ID: {{ data?.id }}
         </p>
         <Button>
-          Add to Cart
+          {{ t('Add_to_cart') }}
         </Button>
       </div>
     </div>
