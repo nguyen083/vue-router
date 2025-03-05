@@ -1,4 +1,4 @@
-import { i18n } from '@/plugins/i18n'
+import { i18n, i18nReady } from '@/plugins/i18n'
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { createNotivue } from 'notivue'
 import { createPinia } from 'pinia'
@@ -26,4 +26,6 @@ app.use(router)
 app.use(notivue)
 app.use(i18n)
 app.use(VueQueryPlugin)
-app.mount('#app')
+i18nReady.then(() => {
+  app.mount('#app')
+})

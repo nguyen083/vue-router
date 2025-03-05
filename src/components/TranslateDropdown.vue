@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { setI18nLanguage } from '@/plugins/i18n'
+import { i18n, setI18nLanguage } from '@/plugins/i18n'
 import { useStorage } from '@vueuse/core'
 import { Languages } from 'lucide-vue-next'
 import { watch } from 'vue'
@@ -18,7 +18,7 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n({ useScope: 'global' })
 const lang = useStorage('lang', 'en')
 watch(lang, async () => {
-  setI18nLanguage(lang.value)
+  setI18nLanguage(i18n, lang.value)
 })
 </script>
 
