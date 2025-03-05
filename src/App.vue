@@ -14,10 +14,9 @@ import { RouterView } from 'vue-router'
       </Notification>
     </NotivueSwipe>
   </Notivue>
-
   <SidebarProvider>
     <AppSidebar />
-    <main class="w-full">
+    <main class="w-full px-5 pt-5">
       <VueQueryDevtools />
       <SidebarTrigger />
       <RouterView />

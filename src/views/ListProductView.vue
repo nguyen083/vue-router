@@ -56,7 +56,7 @@ watch(q, () => {
 <template>
   <div class="container mx-auto px-4 py-8 flex flex-col gap-6 h-screen !w-full">
     <h1 class="text-3xl font-bold mb-6 text-center">
-      {{ t('List_product') }}
+      {{ t('list_product') }}
     </h1>
     <div class="pb-2 flex justify-between">
       <SearchInput />
@@ -65,20 +65,20 @@ watch(q, () => {
     <!-- Display Skeleton when loading  -->
     <div v-if="isPending">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
-        <div v-for="index in 12" :key="index" class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div v-for="index in 12" :key="index" class=" rounded-lg shadow-md overflow-hidden">
           <SkeletonProductCard />
         </div>
       </div>
     </div>
     <!-- Display Error -->
-    <div v-if="isError">
+    <div v-else-if="isError">
       {{ error }}
     </div>
     <!-- Display products -->
     <div v-else>
       <div v-if="productPaging">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
-          <div v-for="(product) in productPaging.products" :key="product.id" class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div v-for="(product) in productPaging.products" :key="product.id" class="overflow-hidden rounded-lg">
             <ProductCard :product="product" />
           </div>
         </div>

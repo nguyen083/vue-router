@@ -3,7 +3,6 @@ import type { ProductInput } from '@/model/product'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -31,6 +30,8 @@ import * as z from 'zod'
 const isOpen = ref<boolean>(false)
 const { t } = useI18n()
 const productMutation = useAddProductMutation()
+const initialFocusRef = ref(null)
+
 const formSchema = toTypedSchema(z.object({
   title: z.string().min(2).max(50),
   description: z.string().min(2).max(100),
@@ -55,64 +56,59 @@ const onSubmit = handleSubmit((values: ProductInput) => {
 </script>
 
 <template>
-  <Dialog v-model:open="isOpen">
+  <Dialog v-model:open="isOpen" :initial-focus="initialFocusRef">
     <DialogTrigger as-child>
-      <Button variant="outline" class="border-gray-500" @click=" isOpen = true ">
-        <Plus class="w-4 h-4 mr-2" /> {{ t('Add_product') }}
+      <Button class="border-gray-500 font-bold">
+        <Plus class="w-4 h-4 mr-1" /> {{ t('add_product') }}
       </Button>
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>{{ t('Add_product') }}</DialogTitle>
+        <DialogTitle>{{ t('add_product') }}</DialogTitle>
         <DialogDescription>
-          {{ t('Add_new_product') }}
+          {{ t('add_new_product') }}
         </DialogDescription>
       </DialogHeader>
-      <form :validation-schema="formSchema" @submit="onSubmit">
-        <FormField v-slot="{ componentField }" name="title">
-          <FormItem>
-            <FormLabel>{{ t('Title') }}</FormLabel>
-            <FormControl>
-              <Input type="text" :placeholder="t('Title_of_product')" v-bind="componentField" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-        <FormField v-slot="{ componentField }" name="description">
-          <FormItem>
-            <FormLabel>{{ t('Description') }}</FormLabel>
-            <FormControl>
-              <Input type="text" :placeholder="t('Description_of_product')" v-bind="componentField" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-        <FormField v-slot="{ componentField }" name="price">
-          <FormItem>
-            <FormLabel>{{ t('Price') }}</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="0.00" v-bind="componentField" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-        <DialogFooter class="fex justify-end gap-3 mt-5">
-          <DialogClose as-child>
+      <div ref="initialFocusRef" tabindex="0">
+        <form :validation-schema="formSchema" @submit="onSubmit">
+          <FormField v-slot="{ componentField }" name="title">
+            <FormItem>
+              <FormLabel>{{ t('title') }}</FormLabel>
+              <FormControl>
+                <Input type="text" :placeholder="t('title_of_product')" v-bind="componentField" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          </FormField>
+          <FormField v-slot="{ componentField }" name="description">
+            <FormItem>
+              <FormLabel>{{ t('description') }}</FormLabel>
+              <FormControl>
+                <Input type="text" :placeholder="t('description_of_product')" v-bind="componentField" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          </FormField>
+          <FormField v-slot="{ componentField }" name="price">
+            <FormItem>
+              <FormLabel>{{ t('price') }}</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="0.00" v-bind="componentField" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          </FormField>
+          <DialogFooter class="fex justify-end gap-3 mt-5">
             <Button
-              type="button" variant="outline" class="border-gray-500"
+              :disabled="productMutation.isPending.value"
+              type="submit" variant="default"
             >
-              {{ t('Close') }}
+              <Loader2 v-if="productMutation.isPending.value" class="w-4 h-4 mr-2 animate-spin" />
+              {{ t('add') }}
             </Button>
-          </DialogClose>
-          <Button
-            :disabled="productMutation.isPending.value"
-            type="submit" variant="default"
-          >
-            <Loader2 v-if="productMutation.isPending.value" class="w-4 h-4 mr-2 animate-spin" />
-            {{ t('Add') }}
-          </Button>
-        </DialogFooter>
-      </form>
+          </DialogFooter>
+        </form>
+      </div>
     </DialogContent>
   </Dialog>
 </template>

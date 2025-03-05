@@ -2,6 +2,13 @@
 import type { Product } from '@/model/product'
 import SkeletonProductCard from '@/components/SkeletonProductCard.vue'
 import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardTitle,
+} from '@/components/ui/card'
 import { useImage } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
@@ -28,24 +35,30 @@ function handleGoToItem() {
 
 <template>
   <SkeletonProductCard v-if="isLoading" />
-  <div v-else>
+
+  <Card v-else class="rounded-lg border-none">
     <img
       :src="props.product.thumbnail" :alt="props.product.title"
-      class="w-full object-cover"
+      class="w-full object-cover rounded-t-lg"
     >
-    <div class="p-4">
-      <h2 class="text-lg font-semibold mb-2">
-        {{ props.product.title }}
-      </h2>
-      <p class="text-gray-600">
-        {{ formatPrice(props.product.price) }}
-      </p>
+    <hr>
+    <CardContent class="flex flex-col gap-4 py-3 bg-gray-200 dark:bg-gray-600">
+      <CardTitle>
+        <span :title="props.product.title" class="text-xl truncate block w-full">
+          {{ props.product.title }}
+        </span>
+      </CardTitle>
+      <CardDescription class="text-orange-400 text-base">
+        {{ t('price') }}: {{ formatPrice(props.product.price) }}
+      </CardDescription>
+    </CardContent>
+    <CardFooter class="flex justify-end w-full bg-gray-200 dark:bg-gray-600">
       <Button
-        class-name="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
+        class-name=" w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
         @click="handleGoToItem"
       >
-        {{ t('Go_to_item') }}
+        {{ t('go_to_item') }}
       </Button>
-    </div>
-  </div>
+    </CardFooter>
+  </Card>
 </template>

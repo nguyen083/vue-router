@@ -16,7 +16,7 @@ function handleSearch() {
 <template>
   <div class="relative w-full max-w-sm items-center">
     <Input
-      id="search" v-model="inputSearch" type="text" :placeholder="t('Enter_the_product_name')" class="pl-10"
+      id="search" v-model="inputSearch" type="text" :placeholder="t('enter_the_product_name')" class="pl-10"
       @keyup.enter="handleSearch"
     />
     <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
