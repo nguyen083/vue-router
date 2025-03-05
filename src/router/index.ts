@@ -1,5 +1,4 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { i18n, loadLocaleMessages } from '@/plugins/i18n'
 import { createRouter, createWebHistory } from 'vue-router'
 import { useNProgress } from '../lib/nprogress'
 import 'nprogress/nprogress.css'
@@ -47,12 +46,9 @@ const router = createRouter({
 })
 const nprogress = useNProgress()
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to) => {
   document.title = `${appName} | ${to.meta.title}`
   nprogress.start()
-  const lang = localStorage.getItem('lang')
-  await loadLocaleMessages(i18n, lang || 'en')
-  return next()
 })
 router.afterEach(() => {
   nprogress.done()
