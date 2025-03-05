@@ -52,6 +52,7 @@ router.beforeEach((to) => {
 })
 router.afterEach(() => {
   nprogress.done()
+  window.scrollTo(0, 0)
 })
 
 export default router

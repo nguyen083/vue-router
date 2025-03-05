@@ -9,30 +9,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { setI18nLanguage } from '@/plugins/i18n'
+import { useStorage } from '@vueuse/core'
 import { Languages } from 'lucide-vue-next'
 import { watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const { t, locale } = useI18n({ useScope: 'global' })
-watch(locale, () => {
-  localStorage.setItem('lang', locale.value)
+const { t } = useI18n({ useScope: 'global' })
+const lang = useStorage('lang', 'en')
+watch(lang, async () => {
+  setI18nLanguage(lang.value)
 })
 </script>
 
 <template>
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
-      <Button variant="ghost">
-        <Languages class="text-black" :size="20" />
+      <Button variant="ghost" class="dark:hover:bg-slate-600">
+        <Languages class="text-black dark:text-white" :size="25" />
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent class="w-fit">
       <DropdownMenuLabel>
-        {{ t('Choose_language') }}
+        {{ t('choose_language') }}
       </DropdownMenuLabel>
       <hr class="border-t border-gray-300">
       <DropdownMenuSeparator />
-      <DropdownMenuRadioGroup v-model="locale">
+      <DropdownMenuRadioGroup v-model="lang">
         <DropdownMenuRadioItem value="en">
           English
         </DropdownMenuRadioItem>

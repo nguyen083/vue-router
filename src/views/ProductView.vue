@@ -2,6 +2,12 @@
 import products from '@/api/product-api'
 import SkeletonProductDetail from '@/components/SkeletonProductDetail.vue'
 import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from '@/components/ui/card'
 import { useQuery } from '@tanstack/vue-query'
 import { useRouteParams } from '@vueuse/router'
 import { computed } from 'vue'
@@ -26,27 +32,36 @@ function formatPrice(price: number) {
 </script>
 
 <template>
-  <SkeletonProductDetail v-if="status === 'pending' " />
-  <div v-else class="container mx-auto px-4 py-8">
-    <div v-if="status === 'success'" class="flex flex-col md:flex-row">
+  <SkeletonProductDetail v-if="status === 'pending'" />
+  <div v-else>
+    <Card v-if="status === 'success'" class="flex">
       <div class="md:w-1/2 mb-8 md:mb-0">
-        <img :src="data?.thumbnail" :alt="data?.title" class="w-full h-auto object-cover rounded-lg shadow-lg">
+        <img :src="data?.thumbnail" :alt="data?.title" class="w-full h-auto object-cover rounded-lg">
       </div>
-      <div class="md:w-1/2 md:pl-8">
-        <h1 class="text-3xl font-bold mb-4">
-          {{ data?.title }}
-        </h1>
-        <p class="text-2xl font-semibold text-gray-700 mb-4">
-          {{ price }}
-        </p>
-        <p class="text-gray-600 mb-6">
-          Product ID: {{ data?.id }}
-        </p>
+      <CardContent class="border-l pt-6">
+        <CardTitle>
+          <h1 class="text-3xl font-bold mb-4 ">
+            {{ data?.title }}
+          </h1>
+        </CardTitle>
+        <CardDescription>
+          <p class="text-2xl font-semibold text-orange-400 mb-2">
+            {{ price }}
+          </p>
+        </CardDescription>
+        <CardDescription class="mb-4">
+          <span class="text-base  text-gray-400 ">
+            <span class="font-bold">
+              {{ t('description') }}:
+            </span>
+            {{ data?.description }}
+          </span>
+        </CardDescription>
         <Button>
-          {{ t('Add_to_cart') }}
+          {{ t('add_to_cart') }}
         </Button>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
     <div v-else class="text-center text-2xl text-gray-600">
       {{ error }}
     </div>

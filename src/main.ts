@@ -1,10 +1,8 @@
-import en from '@/locales/en.json'
-import vi from '@/locales/vi.json'
+import { i18n } from '@/plugins/i18n'
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { createNotivue } from 'notivue'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-import { createI18n } from 'vue-i18n'
 import App from './App.vue'
 import router from './router'
 import '@/assets/main.css'
@@ -21,14 +19,6 @@ const notivue = createNotivue({
       duration: 3000,
     },
   },
-})
-
-const lang = localStorage.getItem('lang')
-const i18n = createI18n({
-  legacy: false,
-  locale: lang || 'en', // Language default
-  fallbackLocale: 'en',
-  messages: { en, vi },
 })
 
 app.use(pinia)
